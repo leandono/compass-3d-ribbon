@@ -1,0 +1,168 @@
+@import "compass/css3/images";
+@import "compass/css3/box-shadow";
+
+@mixin ribbon(
+  $sides: left-bottom right-bottom,
+  $front-color: #ABCDEF, 
+  $edges-color: darken($front-color, 30%),
+  $back-color: $front-color,
+  $front-width: 0,
+  $ribbon-height: 40px,
+  $back-width: 40px,
+  $overlap-width: 30px,
+  $overlap-height: 20px,
+  $overlap-distance: 0
+  ) {
+  
+  div.ribbon-wrapper {
+    height: ($ribbon-height + $overlap-height);
+    position: relative;
+    
+    //Shadow only for bottom
+    @if ($overlap-distance == 0) and ($sides == (left-bottom right-bottom)) or ($sides == (right-bottom left-bottom)) {
+      
+      background-position: 0 $ribbon-height;
+      @include background-image(linear-gradient(#555 0px, rgba(255, 255, 255, 0) $overlap-height));
+      
+    }
+    
+  }
+  
+  div.ribbon-front {
+    width: ($front-width + ($overlap-width*length($sides)) + ($overlap-distance*length($sides)));
+    height: $ribbon-height;
+    background-color: $front-color;
+    position: relative;
+    z-index: 2;
+    @include box-shadow(rgba(0, 0, 0, 0.5) 0px 0px 4px);
+    
+    @if ($sides == right-top) or ($sides == right-bottom) {
+      
+      left: 0;
+      
+    } @else {
+      
+      left: -($overlap-width + $overlap-distance);
+    
+    }
+    
+  }
+  
+    
+  @each $position in (left right) {
+    
+    @if ($position == left) and (($sides == left-top) or ($sides == left-bottom)) {
+    
+      div.ribbon-edge-left-top,
+      div.ribbon-edge-left-bottom {
+        @include _ribbon-edge(left, $overlap-width, $overlap-distance);
+      }
+      
+      div.ribbon-back-left {
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, left, $overlap-distance);
+      }
+    
+    } @else if ($position == right) and (($sides == right-top) or ($sides == right-bottom)) {
+    
+      div.ribbon-edge-right-top,
+      div.ribbon-edge-right-bottom {
+        @include _ribbon-edge(right, $overlap-width, $overlap-distance);
+      }
+      
+       div.ribbon-back-right {
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, right, $overlap-distance);
+      }
+    
+    } @else if ($sides == (left-top right-top)) or ($sides == (left-bottom right-bottom)) or ($sides == (left-top right-bottom)) or ($sides == (left-bottom right-top)) or ($sides == (right-top left-top)) or ($sides == (right-bottom left-bottom)) or ($sides == (right-top left-bottom)) or ($sides == (right-bottom left-top)) {
+    
+      div.ribbon-edge-#{$position}-top,
+      div.ribbon-edge-#{$position}-bottom {
+        @include _ribbon-edge(#{$position}, $overlap-width, $overlap-distance);
+      }
+      
+      div.ribbon-back-#{$position} {
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, #{$position}, $overlap-distance);
+      }
+      
+    }
+    
+  }
+    
+  @each $side in $sides {
+  
+    @if $side ==  left-top {
+      
+      div.ribbon-edge-left-top {
+        bottom: ($ribbon-height + $overlap-height);
+        border-width: $overlap-height $overlap-width 0 0;
+        border-color: transparent $edges-color transparent transparent;
+      }
+      
+      div.ribbon-back-left {
+        top: -$overlap-height;
+      }
+      
+    } @else if $side ==  left-bottom {
+      
+      div.ribbon-edge-left-bottom {
+        top: $ribbon-height;
+        border-width: 0 $overlap-width $overlap-height 0;
+        border-color: transparent $edges-color transparent transparent;
+      }
+      
+      div.ribbon-back-left {
+        top: $overlap-height;
+      }
+    
+    } @else if $side ==  right-top {
+      
+      div.ribbon-edge-right-top {
+        bottom: ($ribbon-height + $overlap-height);
+        border-width: 0 $overlap-width $overlap-height 0;
+        border-color: transparent transparent $edges-color transparent;
+      }
+      
+      div.ribbon-back-right {
+        top: -$overlap-height;
+      }
+    
+    } @else if $side ==  right-bottom { 
+      
+      div.ribbon-edge-right-bottom {
+        top: $ribbon-height;
+        border-width: $overlap-height $overlap-width 0 0;
+        border-color: $edges-color transparent transparent transparent;
+      }
+      
+      div.ribbon-back-right {
+        top: $overlap-height;
+      }
+      
+    }
+  
+  }
+
+}
+
+@mixin _ribbon-edge($position, $overlap-width, $overlap-distance) {
+
+  height:0;
+  width:0;
+  position: absolute;
+  z-index: 1;
+  #{$position}: -($overlap-width + $overlap-distance);
+  border-style:solid;
+  
+}
+
+@mixin _ribbon-back($back-width, $ribbon-height, $back-color, $position, $overlap-distance) {
+
+  width: $back-width;
+  height: $ribbon-height;
+  position: absolute;
+  z-index: 0;
+  @include box-shadow(rgba(0, 0, 0, 0.5) 0px 0px 4px);
+  background-color: $back-color;
+  #{$position}: -($back-width + $overlap-distance);
+
+}
