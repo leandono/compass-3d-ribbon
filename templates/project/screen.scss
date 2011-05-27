@@ -1,0 +1,67 @@
+/* Welcome!
+First, to use the extension be sure you have in your HTML:
+
+    <div class="ribbon-wrapper">
+      <div class="ribbon-front">
+        Some content (like "Lorem ipsum dolor sit amet...") or HTML elements...
+      </div>
+      <div class="ribbon-edge-left-top"></div>
+      <div class="ribbon-edge-right-top"></div>
+      <div class="ribbon-edge-left-bottom"></div>
+      <div class="ribbon-edge-right-bottom"></div>
+      <div class="ribbon-back-left"></div>
+      <div class="ribbon-back-right"></div>
+    </div>
+    
+If you need only one side of the ribbon, you can remove some <div />. For example, if you need a ribbon with only the right side, you can remove <div class="ribbon-edge-left-top"></div>, <div class="ribbon-edge-left-bottom"></div> and <div class="ribbon-back-left"></div>.
+
+Then, create some ribbons as below:   
+    
+*/
+
+//Remember import the extension!
+@import "3d-ribbon";
+
+#3d-ribbon-sample-1{
+  //One ribbon with the default options (only is needed the with of the content, in px)
+  @include 3d-ribbon($front-width: 630px);
+}
+
+#3d-ribbon-sample-2{
+  //You can configure the sides of the ribbon (options availables: left-top, left-bottom, right-top, right-bottom)...
+  @include 3d-ribbon($front-width: 630px, $sides: left-top right-top);
+}
+
+#3d-ribbon-sample-3{
+  //You can configure the height of the ribbon (in px)...
+  @include 3d-ribbon($front-width: 630px, $ribbon-height: 25px);
+}
+
+#3d-ribbon-sample-4{
+  //You can configure the color of the ribbon...
+  @include 3d-ribbon($front-width: 630px, $front-color: #ABCDEF);
+}
+
+#3d-ribbon-sample-5{
+  //You can also configure the color of the edges and back sides of the ribbon...
+  @include 3d-ribbon($front-width: 630px, $front-color: #ABCDEF, $edges-color: darken(red, 50%), $back-color: blue);
+}
+
+#3d-ribbon-sample-6{
+  //Also other options like the width of the back part of the ribbon or the overlap width/height.
+  @include 3d-ribbon($front-width: 630px, $back-width: 20px, $overlap-width: 25px, $overlap-height: 10px);
+}
+
+#3d-ribbon-sample-7{
+  //All options in one ribbon!
+  @include ribbon(
+          $front-width: 630px,
+          $sides: left-bottom right-top,
+          $ribbon-height: 25px,
+          $front-color: yellow, 
+          $edges-color: darken(red, yellow), 
+          $back-color: red,
+          $back-width: 30px, 
+          $overlap-width: 35px, 
+          $overlap-height: 15px);
+}
