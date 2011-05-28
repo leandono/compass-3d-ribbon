@@ -1,11 +1,15 @@
 stylesheet 'screen.scss', :media => 'screen, projection'
+html 'ribbon.html'
 
-description "3D CSS Ribbon"
+description "Ribbons 3D using only CSS"
 
 help %Q{
-Installs a stylesheet that you can use as a reference for usage examples
+Installs some html, a stylesheet partial that 
+you can use directly or refer to as an example.
 }
 
 welcome_message %Q{
-Refer to the stylesheet file for usage examples 
+Please refer to the ribbon.html file to see how the markup should be 
+structured, the ribbon stylesheet partial to see how to use the library and 
+apply it to your markup.
 }

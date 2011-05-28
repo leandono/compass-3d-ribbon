@@ -1,67 +1,114 @@
-/* Welcome!
-First, to use the extension be sure you have in your HTML:
+// Welcome! 
+//** 3D CSS Ribbon **//
 
-    <div class="ribbon-wrapper">
-      <div class="ribbon-front">
-        Some content (like "Lorem ipsum dolor sit amet...") or HTML elements...
-      </div>
-      <div class="ribbon-edge-left-top"></div>
-      <div class="ribbon-edge-right-top"></div>
-      <div class="ribbon-edge-left-bottom"></div>
-      <div class="ribbon-edge-right-bottom"></div>
-      <div class="ribbon-back-left"></div>
-      <div class="ribbon-back-right"></div>
-    </div>
-    
-If you need only one side of the ribbon, you can remove some <div />. For example, if you need a ribbon with only the right side, you can remove <div class="ribbon-edge-left-top"></div>, <div class="ribbon-edge-left-bottom"></div> and <div class="ribbon-back-left"></div>.
+// Imports ------------------------------------------------------------------
+@import "compass/reset";
+@import "compass/css3/text-shadow";
 
-Then, create some ribbons as below:   
-    
-*/
-
-//Remember import the extension!
+//First, remember import the extension!
 @import "3d-ribbon";
 
-#3d-ribbon-sample-1{
-  //One ribbon with the default options (only is needed the with of the content, in px)
-  @include 3d-ribbon($front-width: 630px);
+
+/* Ribbons --------------------------------------------------------------*/
+// Based on the ribbon.html template provided:
+
+#ribbon-example-1{
+  //One ribbon with the default options (only is needed the with of the ribbon content, in px)
+  @include ribbon($front-width: 300px);
 }
 
-#3d-ribbon-sample-2{
-  //You can configure the sides of the ribbon (options availables: left-top, left-bottom, right-top, right-bottom)...
-  @include 3d-ribbon($front-width: 630px, $sides: left-top right-top);
+#ribbon-example-2{
+  //You can configure the sides of the ribbon (left / right) and position (top / bottom). Options availables: left-top, left-bottom, right-top, right-bottom
+  @include ribbon($front-width: 350px, $sides: left-top right-bottom); //Asimetric ribbon!
 }
 
-#3d-ribbon-sample-3{
+#ribbon-example-3{
   //You can configure the height of the ribbon (in px)...
-  @include 3d-ribbon($front-width: 630px, $ribbon-height: 25px);
+  @include ribbon($front-width: 400px, $ribbon-height: 40px);
 }
 
-#3d-ribbon-sample-4{
+#ribbon-example-4{
   //You can configure the color of the ribbon...
-  @include 3d-ribbon($front-width: 630px, $front-color: #ABCDEF);
+  @include ribbon($front-width: 450px, $front-color: #8C46C3);
 }
 
-#3d-ribbon-sample-5{
+#ribbon-example-5{
   //You can also configure the color of the edges and back sides of the ribbon...
-  @include 3d-ribbon($front-width: 630px, $front-color: #ABCDEF, $edges-color: darken(red, 50%), $back-color: blue);
+  @include ribbon($front-width: 500px, $front-color: #8C46C3, $edges-color: darken(#9F4BBA, 50%), $back-color: #B952AE);
 }
 
-#3d-ribbon-sample-6{
-  //Also other options like the width of the back part of the ribbon or the overlap width/height.
-  @include 3d-ribbon($front-width: 630px, $back-width: 20px, $overlap-width: 25px, $overlap-height: 10px);
+#ribbon-example-6{
+  //Other options like the width of the back part of the ribbon or the overlap width/height:
+  @include ribbon($front-width: 550px, $back-width: 20px, $overlap-width: 25px, $overlap-height: 10px);
 }
 
-#3d-ribbon-sample-7{
+#ribbon-example-7{
+  //And the border-radius of the back sides...
+  @include ribbon($front-width: 600px, $border-radius: 5px);
+}
+
+#ribbon-example-8{
   //All options in one ribbon!
   @include ribbon(
-          $front-width: 630px,
-          $sides: left-bottom right-top,
-          $ribbon-height: 25px,
-          $front-color: yellow, 
-          $edges-color: darken(red, yellow), 
-          $back-color: red,
+          $front-width: 650px,
+          $sides: left-bottom,
+          $ribbon-height: 40px,
+          $front-color: #80B5AD, 
+          $edges-color: darken(#8ABD9A, 30%), 
+          $back-color: #8DBF96,
           $back-width: 30px, 
           $overlap-width: 35px, 
-          $overlap-height: 15px);
+          $overlap-height: 15px,
+          $border-radius: 7px);
+}
+
+
+/* Other styles for the demo --------------------------------------------------------------*/
+
+#content{
+  margin: 20px auto;
+  text-align: center;
+  width: 650px;
+  color: #FFF;
+  font-family: sans-serif;
+  
+  h2{
+    font: {
+      size: 28px;
+    }
+    line-height: 40px;
+  }
+  
+}
+
+#ribbon-example-1, #ribbon-example-2, #ribbon-example-3, #ribbon-example-4, #ribbon-example-5, #ribbon-example-6, #ribbon-example-7, #ribbon-example-8, #ribbon-example-9{
+  margin: 80px 0;
+}
+
+//Some nice example
+#ribbon-example-9{
+  @include ribbon(
+          $front-width: 300px,
+          $front-color: #CB261B,
+          $border-radius: 10px);
+          
+  h2{
+    font: {
+      style: italyc;
+      family: Georgia, Verdana,sans-serif;
+    }
+    @include text-shadow(rgba(blue, 0.2) 1px 1px 0, rgba(blue, 0.2) 2px 2px 0, rgba(blue, 0.2) 3px 3px 0);
+  }
+}
+
+#example-9-content{
+  padding: 80px 20px 20px 20px;
+  width: 260px; //Note: 260px + 20px (padding-right) + 20px (padding-left): 300px (the same width of the ribbon :D)
+  position: relative;
+  top: -80px;
+  background: #E7E7E7;
+  color: #000;
+  line-height: 1.2;
+  @include border-radius(15px);
+  @include box-shadow(rgba(0, 0, 0, 0.5) 0px 0px 4px);
 }

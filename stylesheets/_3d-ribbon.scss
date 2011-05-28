@@ -1,24 +1,60 @@
+// 3D CSS Ribbon ------------------------------------------------------------
+// Plugin by Leandro D'onofrio - http://dzign.us/
+
+
+// Imports --------------------------------------------------------------------
+
 @import "compass/css3/images";
 @import "compass/css3/box-shadow";
+@import "compass/css3/border-radius";
 
+//** 3D CSS Ribbon **//
+
+//The real name was "3d-ribbon" but mixins can't start with a number...
 @mixin ribbon(
-  $sides: left-bottom right-bottom,
-  $front-color: #ABCDEF, 
-  $edges-color: darken($front-color, 30%),
-  $back-color: $front-color,
-  $front-width: 0,
-  $ribbon-height: 40px,
-  $back-width: 40px,
-  $overlap-width: 30px,
-  $overlap-height: 20px,
-  $overlap-distance: 0
+
+  // Set the sides of the ribbon
+  $sides             : left-bottom right-bottom,
+  
+  // Set the color of the ribbon
+  $front-color       : #3A89CE,
+  
+  // Set the color of the edges
+  $edges-color       : darken($front-color, 30%),
+  
+  // Set the color of the back sides
+  $back-color        : $front-color,
+  
+  // Set the width of the front
+  $front-width       : 0,
+  
+  // Set the height of the ribbon
+  $ribbon-height     : 40px,
+  
+  // Set the width of the back sides
+  $back-width        : 40px,
+  
+  // Set the width of the overlaps
+  $overlap-width     : 30px,
+  
+  // Set the height of the overlaps
+  $overlap-height    : 20px,
+  
+  // Set the distance of the overlaps
+  $overlap-distance  : 0,
+  
+  // Set the border radius of the back sides
+  $border-radius     : 0
+  
   ) {
   
+  //ribbon-wrapper
   div.ribbon-wrapper {
     height: ($ribbon-height + $overlap-height);
+    width: $front-width;
     position: relative;
     
-    //Shadow only for bottom
+    //Shadow only for bottom sides
     @if ($overlap-distance == 0) and ($sides == (left-bottom right-bottom)) or ($sides == (right-bottom left-bottom)) {
       
       background-position: 0 $ribbon-height;
@@ -28,6 +64,7 @@
     
   }
   
+  //ribbon-front
   div.ribbon-front {
     width: ($front-width + ($overlap-width*length($sides)) + ($overlap-distance*length($sides)));
     height: $ribbon-height;
@@ -48,9 +85,10 @@
     
   }
   
-    
+  //for each side
   @each $position in (left right) {
     
+    //left side
     @if ($position == left) and (($sides == left-top) or ($sides == left-bottom)) {
     
       div.ribbon-edge-left-top,
@@ -59,9 +97,10 @@
       }
       
       div.ribbon-back-left {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, left, $overlap-distance);
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, left, $overlap-distance);
       }
     
+    //right side
     } @else if ($position == right) and (($sides == right-top) or ($sides == right-bottom)) {
     
       div.ribbon-edge-right-top,
@@ -70,9 +109,10 @@
       }
       
        div.ribbon-back-right {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, right, $overlap-distance);
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, right, $overlap-distance);
       }
     
+    //both sides
     } @else if ($sides == (left-top right-top)) or ($sides == (left-bottom right-bottom)) or ($sides == (left-top right-bottom)) or ($sides == (left-bottom right-top)) or ($sides == (right-top left-top)) or ($sides == (right-bottom left-bottom)) or ($sides == (right-top left-bottom)) or ($sides == (right-bottom left-top)) {
     
       div.ribbon-edge-#{$position}-top,
@@ -81,15 +121,17 @@
       }
       
       div.ribbon-back-#{$position} {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, #{$position}, $overlap-distance);
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, #{$position}, $overlap-distance);
       }
       
     }
     
   }
-    
-  @each $side in $sides {
   
+  //for each selected side
+  @each $side in $sides {
+    
+    //left-top side
     @if $side ==  left-top {
       
       div.ribbon-edge-left-top {
@@ -101,7 +143,8 @@
       div.ribbon-back-left {
         top: -$overlap-height;
       }
-      
+    
+    //left-bottom side
     } @else if $side ==  left-bottom {
       
       div.ribbon-edge-left-bottom {
@@ -114,6 +157,7 @@
         top: $overlap-height;
       }
     
+    //right-top side
     } @else if $side ==  right-top {
       
       div.ribbon-edge-right-top {
@@ -126,6 +170,7 @@
         top: -$overlap-height;
       }
     
+    //right-bottom side
     } @else if $side ==  right-bottom { 
       
       div.ribbon-edge-right-bottom {
@@ -144,6 +189,7 @@
 
 }
 
+//private mixins
 @mixin _ribbon-edge($position, $overlap-width, $overlap-distance) {
 
   height:0;
@@ -155,14 +201,31 @@
   
 }
 
-@mixin _ribbon-back($back-width, $ribbon-height, $back-color, $position, $overlap-distance) {
+@mixin _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, $position, $overlap-distance) {
 
   width: $back-width;
   height: $ribbon-height;
   position: absolute;
   z-index: 0;
   @include box-shadow(rgba(0, 0, 0, 0.5) 0px 0px 4px);
+  
+  @if $border-radius != 0 {
+  
+    @if $position == left {
+    
+      @include border-left-radius($border-radius);
+      
+    } @else if $position == right {
+    
+      @include border-right-radius($border-radius);
+    
+    }
+      
+  }
+  
+  
   background-color: $back-color;
   #{$position}: -($back-width + $overlap-distance);
 
 }
+
