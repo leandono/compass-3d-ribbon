@@ -801,7 +801,12 @@ footer, header, hgroup, menu, nav, section {
 }
 
 /* Other styles for the demo --------------------------------------------------------------*/
-/* line 68, ../sass/3d-ribbon-examples.scss */
+/* line 81, ../sass/3d-ribbon-examples.scss */
+body {
+  background: #F8F8F8;
+}
+
+/* line 85, ../sass/3d-ribbon-examples.scss */
 #content {
   margin: 20px auto;
   text-align: center;
@@ -809,17 +814,17 @@ footer, header, hgroup, menu, nav, section {
   color: #FFF;
   font-family: sans-serif;
 }
-/* line 75, ../sass/3d-ribbon-examples.scss */
+/* line 92, ../sass/3d-ribbon-examples.scss */
 #content h2 {
   font-size: 28px;
   line-height: 40px;
 }
 
-/* line 84, ../sass/3d-ribbon-examples.scss */
+/* line 101, ../sass/3d-ribbon-examples.scss */
 #ribbon-example-1, #ribbon-example-2, #ribbon-example-3, #ribbon-example-4, #ribbon-example-5, #ribbon-example-6, #ribbon-example-7, #ribbon-example-8, #ribbon-example-9 {
   margin: 80px 0;
 }
-/* line 87, ../sass/3d-ribbon-examples.scss */
+/* line 104, ../sass/3d-ribbon-examples.scss */
 #ribbon-example-1 .ribbon-wrapper, #ribbon-example-2 .ribbon-wrapper, #ribbon-example-3 .ribbon-wrapper, #ribbon-example-4 .ribbon-wrapper, #ribbon-example-5 .ribbon-wrapper, #ribbon-example-6 .ribbon-wrapper, #ribbon-example-7 .ribbon-wrapper, #ribbon-example-8 .ribbon-wrapper, #ribbon-example-9 .ribbon-wrapper {
   margin: 0 auto;
 }
@@ -940,14 +945,14 @@ footer, header, hgroup, menu, nav, section {
 #ribbon-example-9 div.ribbon-back-right {
   top: 20px;
 }
-/* line 100, ../sass/3d-ribbon-examples.scss */
+/* line 117, ../sass/3d-ribbon-examples.scss */
 #ribbon-example-9 h2 {
   font-style: italyc;
   font-family: Georgia, Verdana,sans-serif;
   text-shadow: rgba(0, 0, 255, 0.2) 1px 1px 0, rgba(0, 0, 255, 0.2) 2px 2px 0, rgba(0, 0, 255, 0.2) 3px 3px 0;
 }
 
-/* line 109, ../sass/3d-ribbon-examples.scss */
+/* line 126, ../sass/3d-ribbon-examples.scss */
 #example-9-content {
   padding: 80px 20px 20px 20px;
   width: 260px;

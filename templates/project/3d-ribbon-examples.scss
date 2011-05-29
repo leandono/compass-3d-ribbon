@@ -13,7 +13,7 @@
 // Based on the 3d-ribbon-examples.html template provided:
 
 #ribbon-example-1{
-  //One ribbon with the default options (only need the with of the ribbon content, in px)
+  //One ribbon with the default options (only need the width of the ribbon content, in px)
   @include ribbon($front-width: 400px);
 }
 
@@ -77,6 +77,10 @@
 
 
 /* Other styles for the demo --------------------------------------------------------------*/
+
+body{
+  background: #F8F8F8;
+}
 
 #content{
   margin: 20px auto;
