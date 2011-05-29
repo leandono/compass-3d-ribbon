@@ -1,6 +1,7 @@
 #3D CSS Ribbons
 
-A extension (for compass) to create (cross-browser) 3D ribbons using only CSS.
+A extension (for [Compass](http://compass-style.org/)) to create 3D ribbons using only CSS. 
+**[Live example](http://jsfiddle.net/dzignus/LXJ7X/)**.
 
 ![some nice example](http://static.tumblr.com/djfsbl4/N1qllypq4/ribbon_example.png) 
 
@@ -9,7 +10,7 @@ The extension is inspired in [3D Ribbon Generator](http://www.css3d.net/ribbon-g
 
 
 
-##Installation
+#Installation
 
 From the command line:
 
@@ -36,11 +37,20 @@ Or create a new project:
 
 
 
-##Intro
+#Intro
 
-The extension offer a simple and flexible way to create awesomes 3D ribbons.
+The extension offer a simple and flexible way to create 3D ribbons with CSS.
 
-### First, in your HTML document:
+Browser support:
+
+* IE7+
+* Firefox 3.5+
+* Google Chrome
+* Safari / Safari iOS
+
+Note: In IE7/8, box-shadows and border-radius only using [CSS3 Pie](http://compass-style.org/reference/compass/css3/pie/).
+
+## First, in your HTML document:
 
 This is the basic structure to create a ribbon with two sides (left / right):
 
@@ -68,7 +78,7 @@ This is the basic structure to create a ribbon with two sides (left / right):
 If you need only one side in the ribbon, you can remove some `<div />`. For example, if you need a ribbon with only the right side, you can remove `<div class="ribbon-edge-left-top"></div>`, `<div class="ribbon-edge-left-bottom"></div>` and `<div class="ribbon-back-left"></div>`.
 
 
-### Then, in your Sass document:
+## Then, in your Sass document:
 
 **The simple way**:
 
@@ -95,14 +105,14 @@ If you need only one side in the ribbon, you can remove some `<div />`. For exam
 
 
 
-##Settings:
+#Settings:
 
-### $front-width: 
+## $front-width: 
 
 The width of the ribbon content, in px. This is the only mandatory argument.
 
 
-### $sides:
+## $sides:
 
 The sides of the ribbon (left / right) and position (top / bottom). Options availables:
 
@@ -119,47 +129,47 @@ For example, is you want a ribbon with only one side (right) and orientation top
 Default value: `left-bottom right-bottom`.
 
 
-### $ribbon-height:
+## $ribbon-height:
 
 The height of the ribbon, in px. Default value: `40px`.
 
 
-### $front-color:
+## $front-color:
 
 The color of the front of the ribbon. Default value: `#3A89CE`.
 
 
-### $edges-color:
+## $edges-color:
 
 The color of the edges of the ribbon. Default value: `darken($front-color, 30%)`.
 
 
-### $back-color:
+## $back-color:
 
 The color of the back part of the ribbon. Default value: `$front-color`.
 
 
-### $back-width:
+## $back-width:
 
 The width of the back part of the ribbon, in px. Default value: `40px`.
 
 
-### $overlap-width:
+## $overlap-width:
 
 The width of the overlap of the ribbon, in px. Default value: `30px`.
 
 
-### $overlap-height:
+## $overlap-height:
 
 The height of the overlap of the ribbon, in px. Default value: `20px`.
 
 
-### $border-radius:
+## $border-radius:
 
 Border radius of the back part of the ribbon. Default value: `0`.
 
 
-### $include-pie:
+## $include-pie:
 
 Support for CSS3 PIE (AKA: border-radius, box-shadow and others CSS3 styles for IE8/7/6). [More info](http://compass-style.org/reference/compass/css3/pie/). Remember set `$pie-behavior` with the path of the `PIE.htc` and deliver the file with the mime-type `Content-Type: text/x-component`.
 
@@ -168,7 +178,7 @@ Default value: `false`.
 
 
 
-##Examples
+#Examples
 
 The examples in action can be found in `templates/project/3d-ribbon-examples.html`.
     
