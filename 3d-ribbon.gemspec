@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   # Gem Details
   s.name = "3d-ribbon"
   s.authors = ["Leandro D'Onofrio"]
-  s.summary = %q{ribbons 3D using only CSS - for compass}
-  s.description = %q{ribbons 3D using only CSS - for compass}
+  s.summary = %q{3D ribbons using only CSS - for compass}
+  s.description = %q{3D ribbons using only CSS - for compass}
   s.email = "leandrodonofrio@gmail.com"
   s.homepage = "http://dzign.us/"
 

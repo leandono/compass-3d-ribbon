@@ -7,6 +7,7 @@
 @import "compass/css3/images";
 @import "compass/css3/box-shadow";
 @import "compass/css3/border-radius";
+@import "compass/css3/pie";
 
 //** 3D CSS Ribbon **//
 
@@ -44,15 +45,22 @@
   $overlap-distance  : 0,
   
   // Set the border radius of the back sides
-  $border-radius     : 0
+  $border-radius     : 0,
+  
+  //Support for CSS3 PIE - More info: http://compass-style.org/reference/compass/css3/pie/
+  $include-pie       : false
   
   ) {
+  
+  //If include CSS3 PIE, don't repeat position: relative
+  $pie-default-approach : none;
   
   //ribbon-wrapper
   div.ribbon-wrapper {
     height: ($ribbon-height + $overlap-height);
     width: $front-width;
     position: relative;
+    z-index: 3;
     
     //Shadow only for bottom sides
     @if ($overlap-distance == 0) and ($sides == (left-bottom right-bottom)) or ($sides == (right-bottom left-bottom)) {
@@ -83,6 +91,12 @@
     
     }
     
+    @if $include-pie == true {
+    
+      @include pie;
+    
+    }
+    
   }
   
   //for each side
@@ -97,7 +111,7 @@
       }
       
       div.ribbon-back-left {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, left, $overlap-distance);
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, left, $overlap-distance, $include-pie);
       }
     
     //right side
@@ -109,7 +123,7 @@
       }
       
        div.ribbon-back-right {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, right, $overlap-distance);
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, right, $overlap-distance, $include-pie);
       }
     
     //both sides
@@ -121,7 +135,7 @@
       }
       
       div.ribbon-back-#{$position} {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, #{$position}, $overlap-distance);
+        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, #{$position}, $overlap-distance, $include-pie);
       }
       
     }
@@ -201,7 +215,7 @@
   
 }
 
-@mixin _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, $position, $overlap-distance) {
+@mixin _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, $position, $overlap-distance, $include-pie) {
 
   width: $back-width;
   height: $ribbon-height;
@@ -223,9 +237,14 @@
       
   }
   
-  
   background-color: $back-color;
   #{$position}: -($back-width + $overlap-distance);
+  
+  @if $include-pie == true {
+  
+    @include pie;
+  
+  }
 
 }
 

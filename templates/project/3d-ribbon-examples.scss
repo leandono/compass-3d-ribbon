@@ -10,47 +10,47 @@
 
 
 /* Ribbons --------------------------------------------------------------*/
-// Based on the ribbon.html template provided:
+// Based on the 3d-ribbon-examples.html template provided:
 
 #ribbon-example-1{
   //One ribbon with the default options (only is needed the with of the ribbon content, in px)
-  @include ribbon($front-width: 300px);
+  @include ribbon($front-width: 400px);
 }
 
 #ribbon-example-2{
   //You can configure the sides of the ribbon (left / right) and position (top / bottom). Options availables: left-top, left-bottom, right-top, right-bottom
-  @include ribbon($front-width: 350px, $sides: left-top right-bottom); //Asimetric ribbon!
+  @include ribbon($front-width: 450px, $sides: left-top right-bottom); //Asimetric ribbon!
 }
 
 #ribbon-example-3{
-  //You can configure the height of the ribbon (in px)...
-  @include ribbon($front-width: 400px, $ribbon-height: 40px);
+  //You can configure the height (in px) & color of the ribbon...
+  @include ribbon($front-width: 550px, $ribbon-height: 40px, $front-color: #8C46C3);
 }
 
 #ribbon-example-4{
-  //You can configure the color of the ribbon...
-  @include ribbon($front-width: 450px, $front-color: #8C46C3);
+  //You can also configure the color of the edges and back sides of the ribbon...
+  @include ribbon($front-width: 600px, $front-color: #8C46C3, $edges-color: darken(#9F4BBA, 10%), $back-color: #B952AE);
 }
 
 #ribbon-example-5{
-  //You can also configure the color of the edges and back sides of the ribbon...
-  @include ribbon($front-width: 500px, $front-color: #8C46C3, $edges-color: darken(#9F4BBA, 50%), $back-color: #B952AE);
+  //Other options like the width of the back part of the ribbon or the overlap width/height:
+  @include ribbon($front-width: 650px, $back-width: 20px, $overlap-width: 25px, $overlap-height: 10px);
 }
 
 #ribbon-example-6{
-  //Other options like the width of the back part of the ribbon or the overlap width/height:
-  @include ribbon($front-width: 550px, $back-width: 20px, $overlap-width: 25px, $overlap-height: 10px);
+  //You can hide the back part...
+  @include ribbon($front-width: 650px, $back-width: 0);
 }
 
 #ribbon-example-7{
   //And the border-radius of the back sides...
-  @include ribbon($front-width: 600px, $border-radius: 5px);
+  @include ribbon($front-width: 700px, $border-radius: 5px);
 }
 
 #ribbon-example-8{
   //All options in one ribbon!
   @include ribbon(
-          $front-width: 650px,
+          $front-width: 750px,
           $sides: left-bottom,
           $ribbon-height: 40px,
           $front-color: #80B5AD, 
@@ -63,12 +63,25 @@
 }
 
 
+//One more thing...
+//Support for CSS3 PIE (AKA: border-radius, box-shadow and others CSS3 styles for IE8/7/6)
+//More info: http://compass-style.org/reference/compass/css3/pie/
+//First, remember set $pie-behavior with the path of the PIE.htc and deliver the file with the mime-type "Content-Type: text/x-component" (more info: http://css3pie.com/documentation/known-issues/#content-type).
+//Then just set $include-pie : true in the @include:
+
+//#ribbon-example{
+  //@include ribbon($front-width: 400px, $include-pie: true);
+//}
+
+
+
+
 /* Other styles for the demo --------------------------------------------------------------*/
 
 #content{
   margin: 20px auto;
   text-align: center;
-  width: 650px;
+  width: 750px;
   color: #FFF;
   font-family: sans-serif;
   
@@ -83,6 +96,11 @@
 
 #ribbon-example-1, #ribbon-example-2, #ribbon-example-3, #ribbon-example-4, #ribbon-example-5, #ribbon-example-6, #ribbon-example-7, #ribbon-example-8, #ribbon-example-9{
   margin: 80px 0;
+  
+  .ribbon-wrapper{
+    margin: 0 auto;
+  }
+  
 }
 
 //Some nice example
@@ -111,4 +129,5 @@
   line-height: 1.2;
   @include border-radius(15px);
   @include box-shadow(rgba(0, 0, 0, 0.5) 0px 0px 4px);
+  margin: 0 auto;
 }
