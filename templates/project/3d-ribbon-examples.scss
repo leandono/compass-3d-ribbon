@@ -13,7 +13,7 @@
 // Based on the 3d-ribbon-examples.html template provided:
 
 #ribbon-example-1{
-  //One ribbon with the default options (only is needed the with of the ribbon content, in px)
+  //One ribbon with the default options (only need the with of the ribbon content, in px)
   @include ribbon($front-width: 400px);
 }
 
@@ -33,7 +33,7 @@
 }
 
 #ribbon-example-5{
-  //Other options like the width of the back part of the ribbon or the overlap width/height:
+  //Other options like the width of the back part or the overlap width/height:
   @include ribbon($front-width: 650px, $back-width: 20px, $overlap-width: 25px, $overlap-height: 10px);
 }
 
@@ -43,7 +43,7 @@
 }
 
 #ribbon-example-7{
-  //And the border-radius of the back sides...
+  //Or set some border-radius...
   @include ribbon($front-width: 700px, $border-radius: 5px);
 }
 
