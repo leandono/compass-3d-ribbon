@@ -64,9 +64,8 @@
     
     //Shadow only for bottom sides
     @if ($overlap-distance == 0) and ($sides == (left-bottom right-bottom)) or ($sides == (right-bottom left-bottom)) {
-      
-      background-position: 0 $ribbon-height;
-      @include background-image(linear-gradient(#555 0px, rgba(255, 255, 255, 0) $overlap-height));
+
+      @include background(linear-gradient(#555 0px, rgba(255, 255, 255, 0) $overlap-height) 0 $ribbon-height);
       
     }
     

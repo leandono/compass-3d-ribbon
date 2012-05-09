@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   # Release Specific Information
-  s.version = "0.1"
+  s.version = "0.1.2"
   s.date = "2011-05-28"
 
   # Gem Details
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.summary = %q{3D ribbons using only CSS - for compass}
   s.description = %q{3D ribbons using only CSS - for compass}
   s.email = "leandrodonofrio@gmail.com"
-  s.homepage = "http://dzign.us/"
+  s.homepage = "https://github.com/dzignus/compass-3d-ribbon"
 
   # Gem Files
   s.files = %w(README.markdown)
@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
   # Gem Bookkeeping
   s.has_rdoc = false
   s.rubygems_version = %q{1.3.6}
-  s.add_dependency("compass", [">= 0.11.beta.3"])
+  s.add_dependency("compass", [">= 0.12.1"])
 end
 
