@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   # Release Specific Information
-  s.version = "0.1.2"
-  s.date = "2011-05-28"
+  s.version = "0.2.0"
+  s.date = "2014-06-08"
 
   # Gem Details
   s.name = "3d-ribbon"
@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
   s.files = %w(README.markdown)
   s.files += Dir.glob("lib/**/*.*")
   s.files += Dir.glob("stylesheets/**/*.*")
-  s.files += Dir.glob("templates/**/*.*")
 
   # Gem Bookkeeping
   s.has_rdoc = false

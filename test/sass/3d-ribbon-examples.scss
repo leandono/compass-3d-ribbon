@@ -1,0 +1,183 @@
+//First, remember import the extension!
+@import "3d-ribbon";
+
+//** Styles only for cosmetic purposes **//
+
+body{
+  font-family: "open sans", serif;
+  width: 75%;
+  margin: 0 auto;
+  text-align:center;
+  font-size: 16px;
+}
+
+p{
+  margin: 5px 0;
+}
+
+.wrapper{
+  width: 75%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.ribbon{
+  padding: 5px;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 100;
+  margin-top: 0;
+  margin-bottom: 60px;
+}
+
+//** Implementation **//
+
+//Default
+.ribbon-default{
+  @include ribbon();
+ }
+
+//Custom 1
+.ribbon-custom-1{
+  @include ribbon(
+    $background-color: #5cb85c,
+    $position: bottom,
+    $sides: left right,
+    $overlap-horizontal: 20px,
+    $overlap-vertical: 15px,
+    $overlap-color: darken(#5cb85c, 15%) 
+   );
+ }
+
+//Custom 2
+.ribbon-custom-2{
+  @include ribbon(
+    $background-color: #5bc0de,
+    $position: top,
+    $sides: left right,
+    $overlap-horizontal: 20px,
+    $overlap-vertical: 15px,
+    $overlap-color: darken(#5bc0de, 40%) 
+   );
+ }
+
+//Custom 3
+.ribbon-custom-3{
+  @include ribbon(
+    $background-color: #f0ad4e,
+    $position: top,
+    $sides: left,
+    $overlap-horizontal: 20px,
+    $overlap-vertical: 15px,
+    $overlap-color: darken(#f0ad4e, 40%) 
+   );
+ }
+
+//Custom 4
+$ribbon-background-color: #d9534f;
+$ribbon-position: top;
+$ribbon-sides: left right;
+$ribbon-overlap-horizontal-distance: 20px;
+$ribbon-overlap-vertical-distance: 15px;
+$ribbon-back-width: 20px;
+$ribbon-back-height: 30px;
+
+.ribbon-custom-4{
+  @include ribbon(
+    $background-color: $ribbon-background-color,
+    $position: $ribbon-position,
+    $sides: $ribbon-sides,
+    $overlap-horizontal: $ribbon-overlap-horizontal-distance,
+    $overlap-vertical: $ribbon-overlap-vertical-distance,
+    $overlap-color: darken($ribbon-background-color, 30%) 
+   );
+
+  @each $side in $ribbon-sides {
+
+    .ribbon-#{$side}{
+      @include ribbon-back(
+      $side: #{$side},
+      $background-color: $ribbon-background-color,
+      $position: $ribbon-position,
+      $width: $ribbon-back-width,
+      $height: $ribbon-back-height,
+      $horizontal-distance: $ribbon-overlap-horizontal-distance,
+      $vertical-distance: $ribbon-overlap-vertical-distance,
+      $snip-color: transparent
+      );
+    }
+
+  }
+  
+ }
+
+//Fancy example
+$ribbon-fancy-container-width: 300px;
+$ribbon-fancy-container-padding: 15px;
+$ribbon-fancy-background-color: #e54439;
+$ribbon-fancy-position: bottom;
+$ribbon-fancy-sides: left right;
+$ribbon-fancy-overlap-horizontal-distance: 20px;
+$ribbon-fancy-overlap-vertical-distance: 15px;
+$ribbon-fancy-back-width: 60px;
+$ribbon-fancy-back-height: 45px;
+
+.fancy{
+  width: $ribbon-fancy-container-width;
+  margin: 0 auto 20px auto;
+  background: #E7E7E7;
+  padding: $ribbon-fancy-container-padding;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px;
+  
+  h2{
+    font-style: italyc;
+    line-height: 1;
+    padding: 5px 0;
+    color: #FFF;
+    margin: 0;
+    text-shadow: rgba(0, 0, 255, 0.2) 1px 1px 0, rgba(0, 0, 255, 0.2) 2px 2px 0, rgba(0, 0, 255, 0.2) 3px 3px 0;
+    width: $ribbon-fancy-container-width + ($ribbon-fancy-overlap-horizontal-distance * 2) + ($ribbon-fancy-container-padding * 2);
+    left: -($ribbon-fancy-overlap-horizontal-distance + $ribbon-fancy-container-padding);
+
+    @include ribbon(
+      $background-color: $ribbon-fancy-background-color,
+      $position: $ribbon-fancy-position,
+      $sides: $ribbon-fancy-sides,
+      $overlap-horizontal: $ribbon-fancy-overlap-horizontal-distance,
+      $overlap-vertical: $ribbon-fancy-overlap-vertical-distance,
+      $overlap-color: lighten($ribbon-fancy-background-color, 30%) 
+     );
+    
+    .ribbon-center{
+      display: block;
+      background-color: $ribbon-fancy-background-color;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    }
+
+    @each $side in $ribbon-fancy-sides {
+
+      .ribbon-#{$side}{
+        @include ribbon-back(
+        $side: #{$side},
+        $background-color: $ribbon-fancy-background-color,
+        $position: $ribbon-fancy-position,
+        $width: $ribbon-fancy-back-width,
+        $height: $ribbon-fancy-back-height,
+        $horizontal-distance: $ribbon-fancy-overlap-horizontal-distance,
+        $vertical-distance: $ribbon-fancy-overlap-vertical-distance,
+        $snip-color: #FFF
+        );
+      }
+
+    }
+
+  }
+  
+  p{
+    line-height: 1.5;
+  }
+
+}

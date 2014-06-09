@@ -1,13 +1,11 @@
 #3D CSS Ribbons
 
 A extension (for [Compass](http://compass-style.org/)) to create 3D ribbons using only CSS. 
-**[Live example](http://jsfiddle.net/dzignus/LXJ7X/)**.
+**[Live example](http://codepen.io/dzignus/pen/yjLwD)**.
 
-![some nice example](http://static.tumblr.com/djfsbl4/N1qllypq4/ribbon_example.png) 
+![some nice example](http://i.imgur.com/O7o32NZ.png)
 
 The extension is inspired in [3D Ribbon Generator](http://www.css3d.net/ribbon-generator/).
-
-
 
 
 #Installation
@@ -27,14 +25,9 @@ Installing into an existing project:
 	#import the extension into your scss/sass file
 	@import "3d-ribbon"
 
-Or create a new project:
+If you don't have/want use Compass, you can [download the main sass](https://github.com/dzignus/compass-3d-ribbon/blob/master/stylesheets/_3d-ribbon.scss) file and import it:
 
-    compass create <project_name> -r 3d-ribbon --using 3d-ribbon 
-
-	#import the extension into your scss/sass file
-	@import "3d-ribbon"
-
-
+	@import "<path to the file>/_3d-ribbon.scss"
 
 
 #Intro
@@ -43,188 +36,171 @@ The extension offer a simple and flexible way to create 3D ribbons with CSS.
 
 Browser support:
 
-* IE7+
-* Firefox 3.5+
+* IE8+
+* Firefox
 * Google Chrome
 * Safari / Safari iOS
 
-Note: In IE7/8, box-shadows and border-radius only using [CSS3 Pie](http://compass-style.org/reference/compass/css3/pie/).
-
 ## First, in your HTML document:
 
-This is the basic structure to create a ribbon with two sides (left / right):
+You only need a block element to apply the ribbon, for example:
 
-	<div id="ribbon-example-foo">
-
-		<!--start ribbon-->
-		<div class="ribbon-wrapper">
-			<div class="ribbon-front">
-			
-				Here you can put some content (like "Lorem ipsum dolor sit amet...") or HTML elements
-				
-			</div>
-			<div class="ribbon-edge-left-top"></div>
-			<div class="ribbon-edge-right-top"></div>
-			<div class="ribbon-edge-left-bottom"></div>
-			<div class="ribbon-edge-right-bottom"></div>
-			<div class="ribbon-back-left"></div>
-			<div class="ribbon-back-right"></div>
-		</div>
-		<!--end ribbon -->
-
-	</div>
-
-
-If you need only one side in the ribbon, you can remove some `<div />`. For example, if you need a ribbon with only the right side, you can remove `<div class="ribbon-edge-left-top"></div>`, `<div class="ribbon-edge-left-bottom"></div>` and `<div class="ribbon-back-left"></div>`.
+	<h3 class="ribbon">This is my title</h3>
 
 
 ## Then, in your Sass document:
 
 **The simple way**:
 
-    #ribbon-example-foo{
-      @include ribbon($front-width: 400px);
+    .ribbon{
+      @include ribbon();
     }
 
 **The flexible way (with all options)**:
 
-    #ribbon-example-foo{
-      @include ribbon(
-              $front-width: 750px,
-              $sides: left-bottom,
-              $ribbon-height: 40px,
-              $front-color: #80B5AD, 
-              $edges-color: darken(#8ABD9A, 30%), 
-              $back-color: #8DBF96,
-              $back-width: 30px, 
-              $overlap-width: 35px, 
-              $overlap-height: 15px,
-              $border-radius: 7px,
-              $include-pie: true);
-    }
+    .ribbon{
+        @include ribbon(
+            // Set the background color of the ribbon
+            $background-color    : <color>,
 
+            // Set the position of the sides
+            $position            : <bottom> | <top>,
+
+            // Set the sides of the ribbon
+            $sides               : <left> | <rigth> | <left right>,
+
+            // Set the width of the overlaps
+            $overlap-horizontal  : <width>,
+
+            // Set the height of the overlaps
+            $overlap-vertical    : <height>,
+
+            // Set the color of the edges
+            $overlap-color       : <color>
+        )
+    }
 
 
 #Settings:
 
-## $front-width: 
+## $background-color: 
 
-The width of the ribbon content, in px. This is the only mandatory argument.
+Set the background color of the ribbon. Default value: `#428bca`.
+
+
+## $position:
+
+Set the position of the sides. Default value: `top`.
 
 
 ## $sides:
 
-The sides of the ribbon (left / right) and position (top / bottom). Options availables:
-
-* `left-top`
-* `left-bottom`
-* `right-top`
-* `right-bottom`
-
-For example, is you want a ribbon with only one side (right) and orientation top:
-
-      @include ribbon($front-width: 450px, $sides: right-top);
+Set the sides of the ribbon. Default value: `left right`.
 
 
-Default value: `left-bottom right-bottom`.
+## $overlap-horizontal:
+
+Set the width of the overlaps. Default value: `30px`.
 
 
-## $ribbon-height:
+## $overlap-vertical:
 
-The height of the ribbon, in px. Default value: `40px`.
-
-
-## $front-color:
-
-The color of the front of the ribbon. Default value: `#3A89CE`.
+Set the height of the overlaps. Default value: `20px`.
 
 
-## $edges-color:
+## $overlap-color:
 
-The color of the edges of the ribbon. Default value: `darken($front-color, 30%)`.
-
-
-## $back-color:
-
-The color of the back part of the ribbon. Default value: `$front-color`.
+Set the color of the edges. Default value: `darken(#428bca, 30%)`.
 
 
-## $back-width:
+#Adding the ribbon's back
 
-The width of the back part of the ribbon, in px. Default value: `40px`.
-
-
-## $overlap-width:
-
-The width of the overlap of the ribbon, in px. Default value: `30px`.
+If you want the ribbon's back you need add some spans into your HTML:
 
 
-## $overlap-height:
+	<h3 class="ribbon">
+		This is my title
+		<span class="ribbon-left"></span>
+		<span class="ribbon-right"></span>
+	</h3>
 
-The height of the overlap of the ribbon, in px. Default value: `20px`.
+Later in your sass use the `ribbon-back` mixin:
 
-
-## $border-radius:
-
-Border radius of the back part of the ribbon. Default value: `0`.
-
-
-## $include-pie:
-
-Support for CSS3 PIE (AKA: border-radius, box-shadow and others CSS3 styles for IE8/7/6). [More info](http://compass-style.org/reference/compass/css3/pie/). Remember set `$pie-behavior` with the path of the `PIE.htc` and deliver the file with the mime-type `Content-Type: text/x-component`.
-
-Default value: `false`.
-
-
-
-
-#Examples
-
-The examples in action can be found in `templates/project/3d-ribbon-examples.html`.
-    
-    #ribbon-example-1{
-      @include ribbon($front-width: 400px);
+    .ribbon-left{
+      @include ribbon-back($side: left);
     }
-    
-    #ribbon-example-2{
-      @include ribbon($front-width: 450px, $sides: left-top right-bottom); //Asimetric ribbon!
+
+    .ribbon-right{
+      @include ribbon-back($side: right);
     }
-    
-    #ribbon-example-3{
-      @include ribbon($front-width: 550px, $ribbon-height: 40px, $front-color: #8C46C3);
+
+The mixin also have many setting for customization:
+
+    .ribbon-back{
+        @include ribbon-back(
+            // The side to create. This is the only required param
+            $side,
+
+            // Set the background color of the ribbon's back
+            $background-color    : <color>,
+
+            // Set the position of the ribbon's back
+            $position            : <top> | <bottom>,
+
+            // Set the height of the ribbon's back
+            $height              : <height>,
+
+            // Set the width of the ribbon's back
+            $width               : <width>,
+
+            // Set the vertical distance of the ribbon's back
+            $horizontal-distance : <height>,
+
+            // Set the horizontal distance of the ribbon's back
+            $vertical-distance   : <width>,
+
+            // Set the color of the back's snip
+            $snip-color          : <color>
+        )
     }
-    
-    #ribbon-example-4{
-      @include ribbon($front-width: 600px, $front-color: #8C46C3, $edges-color: darken(#9F4BBA, 10%), $back-color: #B952AE);
-    }
-    
-    #ribbon-example-5{
-      @include ribbon($front-width: 650px, $back-width: 20px, $overlap-width: 25px, $overlap-height: 10px);
-    }
-    
-    #ribbon-example-6{
-      @include ribbon($front-width: 650px, $back-width: 0);
-    }
-    
-    #ribbon-example-7{
-      @include ribbon($front-width: 700px, $border-radius: 5px);
-    }
-    
-    #ribbon-example-8{
+
+It's probably that the two mixins (`ribbon` and `ribbon-back`) share values, so, the best way is declare some variables to use with the mixins. For example:
+
+    $ribbon-background-color: #d9534f;
+    $ribbon-position: top;
+    $ribbon-sides: left right;
+    $ribbon-overlap-horizontal-distance: 20px;
+    $ribbon-overlap-vertical-distance: 15px;
+    $ribbon-back-width: 20px;
+    $ribbon-back-height: 30px;
+
+    .ribbon{
       @include ribbon(
-              $front-width: 750px,
-              $sides: left-bottom,
-              $ribbon-height: 40px,
-              $front-color: #80B5AD, 
-              $edges-color: darken(#8ABD9A, 30%), 
-              $back-color: #8DBF96,
-              $back-width: 30px, 
-              $overlap-width: 35px, 
-              $overlap-height: 15px,
-              $border-radius: 7px,
-              $include-pie: true);
-    }
+        $background-color: $ribbon-background-color,
+        $position: $ribbon-position,
+        $sides: $ribbon-sides,
+        $overlap-horizontal: $ribbon-overlap-horizontal-distance,
+        $overlap-vertical: $ribbon-overlap-vertical-distance,
+        $overlap-color: darken($ribbon-background-color, 30%) 
+       );
 
+      @each $side in $ribbon-sides {
 
+        .ribbon-#{$side}{
+          @include ribbon-back(
+          $side: #{$side},
+          $background-color: $ribbon-background-color,
+          $position: $ribbon-position,
+          $width: $ribbon-back-width,
+          $height: $ribbon-back-height,
+          $horizontal-distance: $ribbon-overlap-horizontal-distance,
+          $vertical-distance: $ribbon-overlap-vertical-distance,
+          $snip-color: transparent
+          );
+        }
 
+      }
+      
+     }
 
+**[Live example](http://codepen.io/dzignus/pen/yjLwD)**

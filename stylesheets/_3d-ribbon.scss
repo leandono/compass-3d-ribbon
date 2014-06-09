@@ -1,249 +1,175 @@
 // 3D CSS Ribbon ------------------------------------------------------------
-// Plugin by Leandro D'onofrio - http://dzign.us/
+// Plugin by Leandro D'Onofrio - http://dzign.us/
 
+//** Default variables for the ribbon **//
 
-// Imports --------------------------------------------------------------------
+$ribbon-3d-background-color: #428bca!default;
+$ribbon-3d-position: bottom!default;
+$ribbon-3d-sides: left right!default;
+$ribbon-3d-overlap-horizontal: 30px!default;
+$ribbon-3d-overlap-vertical: 20px!default;
+$ribbon-3d-overlap-color: darken($ribbon-3d-background-color, 30%)!default;
 
-@import "compass/css3/images";
-@import "compass/css3/box-shadow";
-@import "compass/css3/border-radius";
-@import "compass/css3/pie";
+//** 3D CSS Ribbon mixin **//
 
-//** 3D CSS Ribbon **//
-
-//The real name was "3d-ribbon" but mixins can't start with a number...
 @mixin ribbon(
 
-  // Set the sides of the ribbon
-  $sides             : left-bottom right-bottom,
-  
-  // Set the color of the ribbon
-  $front-color       : #3A89CE,
-  
-  // Set the color of the edges
-  $edges-color       : darken($front-color, 30%),
-  
-  // Set the color of the back sides
-  $back-color        : $front-color,
-  
-  // Set the width of the front
-  $front-width       : 0,
-  
-  // Set the height of the ribbon
-  $ribbon-height     : 40px,
-  
-  // Set the width of the back sides
-  $back-width        : 40px,
-  
-  // Set the width of the overlaps
-  $overlap-width     : 30px,
-  
-  // Set the height of the overlaps
-  $overlap-height    : 20px,
-  
-  // Set the distance of the overlaps
-  $overlap-distance  : 0,
-  
-  // Set the border radius of the back sides
-  $border-radius     : 0,
-  
-  //Support for CSS3 PIE - More info: http://compass-style.org/reference/compass/css3/pie/
-  $include-pie       : false
-  
+    // Set the background color of the ribbon
+    $background-color    : $ribbon-3d-background-color,
+    
+    // Set the position of the sides
+    $position            : $ribbon-3d-position,
+
+    // Set the sides of the ribbon
+    $sides               : $ribbon-3d-sides,
+    
+    // Set the width of the overlaps
+    $overlap-horizontal  : $ribbon-3d-overlap-horizontal,
+    
+    // Set the height of the overlaps
+    $overlap-vertical    : $ribbon-3d-overlap-vertical,
+
+    // Set the color of the edges
+    $overlap-color       : $ribbon-3d-overlap-color
+
   ) {
-  
-  //If include CSS3 PIE, don't repeat position: relative
-  $pie-default-approach : none;
-  
-  //ribbon-wrapper
-  div.ribbon-wrapper {
-    height: ($ribbon-height + $overlap-height);
-    width: $front-width;
+
+    background-color: $background-color;
     position: relative;
-    z-index: 3;
-    
-    //Shadow only for bottom sides
-    @if ($overlap-distance == 0) and ($sides == (left-bottom right-bottom)) or ($sides == (right-bottom left-bottom)) {
+    z-index: 6;
 
-      @include background(linear-gradient(#555 0px, rgba(255, 255, 255, 0) $overlap-height) 0 $ribbon-height);
-      
+    &:before, &:after{
+      content: "";
+      width: 0; 
+      height: 0;
+      position: absolute;
+      font-size: 0;
+      line-height: 0;
+      z-index: 5;
+
+      @if $position == "bottom" {
+        border-top: 0 solid transparent;
+        border-bottom: $overlap-vertical solid transparent;
+        bottom: -$overlap-vertical;
+      }
+
+      @if $position == "top" {
+        border-bottom: 0 solid transparent;
+        border-top: $overlap-vertical solid transparent;
+        top: -$overlap-vertical;
+      }
+
     }
-    
-  }
-  
-  //ribbon-front
-  div.ribbon-front {
-    width: ($front-width + ($overlap-width*length($sides)) + ($overlap-distance*length($sides)));
-    height: $ribbon-height;
-    background-color: $front-color;
-    position: relative;
-    z-index: 2;
-    @include box-shadow(rgba(0, 0, 0, 0.5) 0px 0px 4px);
-    
-    @if ($sides == right-top) or ($sides == right-bottom) {
-      
-      left: 0;
-      
-    } @else {
-      
-      left: -($overlap-width + $overlap-distance);
-    
+
+    $sides-length: length($sides);
+
+    @if ($sides == right) or ($sides-length == 2) {
+
+      &:before{
+        border-left: $overlap-horizontal solid $overlap-color;
+        right: 0;
+      }
+
     }
-    
-    @if $include-pie == true {
-    
-      @include pie;
-    
+
+    @if ($sides == left) or ($sides-length == 2) {
+
+      &:after{
+        border-right: $overlap-horizontal solid $overlap-color;
+        left: 0;
+      }
+
     }
-    
-  }
-  
-  //for each side
-  @each $position in (left right) {
-    
-    //left side
-    @if ($position == left) and (($sides == left-top) or ($sides == left-bottom)) {
-    
-      div.ribbon-edge-left-top,
-      div.ribbon-edge-left-bottom {
-        @include _ribbon-edge(left, $overlap-width, $overlap-distance);
-      }
-      
-      div.ribbon-back-left {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, left, $overlap-distance, $include-pie);
-      }
-    
-    //right side
-    } @else if ($position == right) and (($sides == right-top) or ($sides == right-bottom)) {
-    
-      div.ribbon-edge-right-top,
-      div.ribbon-edge-right-bottom {
-        @include _ribbon-edge(right, $overlap-width, $overlap-distance);
-      }
-      
-       div.ribbon-back-right {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, right, $overlap-distance, $include-pie);
-      }
-    
-    //both sides
-    } @else if ($sides == (left-top right-top)) or ($sides == (left-bottom right-bottom)) or ($sides == (left-top right-bottom)) or ($sides == (left-bottom right-top)) or ($sides == (right-top left-top)) or ($sides == (right-bottom left-bottom)) or ($sides == (right-top left-bottom)) or ($sides == (right-bottom left-top)) {
-    
-      div.ribbon-edge-#{$position}-top,
-      div.ribbon-edge-#{$position}-bottom {
-        @include _ribbon-edge(#{$position}, $overlap-width, $overlap-distance);
-      }
-      
-      div.ribbon-back-#{$position} {
-        @include _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, #{$position}, $overlap-distance, $include-pie);
-      }
-      
-    }
-    
-  }
-  
-  //for each selected side
-  @each $side in $sides {
-    
-    //left-top side
-    @if $side ==  left-top {
-      
-      div.ribbon-edge-left-top {
-        bottom: ($ribbon-height + $overlap-height);
-        border-width: $overlap-height $overlap-width 0 0;
-        border-color: transparent $edges-color transparent transparent;
-      }
-      
-      div.ribbon-back-left {
-        top: -$overlap-height;
-      }
-    
-    //left-bottom side
-    } @else if $side ==  left-bottom {
-      
-      div.ribbon-edge-left-bottom {
-        top: $ribbon-height;
-        border-width: 0 $overlap-width $overlap-height 0;
-        border-color: transparent $edges-color transparent transparent;
-      }
-      
-      div.ribbon-back-left {
-        top: $overlap-height;
-      }
-    
-    //right-top side
-    } @else if $side ==  right-top {
-      
-      div.ribbon-edge-right-top {
-        bottom: ($ribbon-height + $overlap-height);
-        border-width: 0 $overlap-width $overlap-height 0;
-        border-color: transparent transparent $edges-color transparent;
-      }
-      
-      div.ribbon-back-right {
-        top: -$overlap-height;
-      }
-    
-    //right-bottom side
-    } @else if $side ==  right-bottom { 
-      
-      div.ribbon-edge-right-bottom {
-        top: $ribbon-height;
-        border-width: $overlap-height $overlap-width 0 0;
-        border-color: $edges-color transparent transparent transparent;
-      }
-      
-      div.ribbon-back-right {
-        top: $overlap-height;
-      }
-      
-    }
-  
-  }
 
 }
 
-//private mixins
-@mixin _ribbon-edge($position, $overlap-width, $overlap-distance) {
+//** Default variables for the ribbon's back **//
 
-  height:0;
-  width:0;
+$ribbon-3d-back-background-color: $ribbon-3d-background-color!default;
+$ribbon-3d-back-position: $ribbon-3d-position!default;
+$ribbon-3d-back-height: 40px!default;
+$ribbon-3d-back-width: 60px!default;
+$ribbon-3d-back-horizontal-distance: $ribbon-3d-overlap-horizontal!default;
+$ribbon-3d-back-vertical-distance: $ribbon-3d-overlap-vertical!default;
+$ribbon-3d-back-snip-color: transparent!default;
+
+//** 3D CSS Ribbon mixin's back **//
+
+@mixin ribbon-back(
+
+    // The side to create
+    $side,
+
+    // Set the background color of the ribbon's back
+    $background-color    : $ribbon-3d-back-background-color,
+
+    // Set the position of the ribbon's back
+    $position            : $ribbon-3d-back-position,
+
+    // Set the height of the ribbon's back
+    $height              : $ribbon-3d-back-height,
+
+    // Set the width of the ribbon's back
+    $width               : $ribbon-3d-back-width,
+
+    // Set the vertical distance of the ribbon's back
+    $horizontal-distance : $ribbon-3d-back-horizontal-distance,
+
+    // Set the horizontal distance of the ribbon's back
+    $vertical-distance   : $ribbon-3d-back-vertical-distance,
+
+    // Set the color of the back's snip
+    $snip-color          : $ribbon-3d-back-snip-color
+
+  ){
+
+  display: block;
+  height: $height;
+  width: $width;
+  background-color: $background-color;
   position: absolute;
-  z-index: 1;
-  #{$position}: -($overlap-width + $overlap-distance);
-  border-style:solid;
-  
-}
+  z-index: -1;
 
-@mixin _ribbon-back($back-width, $ribbon-height, $back-color, $border-radius, $position, $overlap-distance, $include-pie) {
+  @if $side == left {
+    left: - ($width - $horizontal-distance);
+  }
 
-  width: $back-width;
-  height: $ribbon-height;
-  position: absolute;
-  z-index: 0;
-  @include box-shadow(rgba(0, 0, 0, 0.5) 0px 0px 4px);
-  
-  @if $border-radius != 0 {
-  
-    @if $position == left {
-    
-      @include border-left-radius($border-radius);
-      
-    } @else if $position == right {
-    
-      @include border-right-radius($border-radius);
-    
+  @if $side == right {
+    right: - ($width - $horizontal-distance);
+  }
+
+  @if $position == bottom {
+    bottom: -$vertical-distance;
+  }
+
+  @if $position == top {
+    top: -$vertical-distance;
+  }
+
+  @if $snip-color != transparent {
+
+    &:before{
+      content: "";
+      width: 0; 
+      height: 0;
+      position: absolute;
+      font-size: 0;
+      line-height: 0;
+      border-bottom: $height / 2 solid transparent;
+      border-top: $height / 2 solid transparent;
+
+      @if $side == left {
+        border-left: ($height / 2) / 2 solid $snip-color;
+        left: 0;
+      }
+
+      @if $side == right {
+        border-right: ($height / 2) / 2 solid $snip-color;
+        right: 0;
+      }
+
     }
-      
-  }
-  
-  background-color: $back-color;
-  #{$position}: -($back-width + $overlap-distance);
-  
-  @if $include-pie == true {
-  
-    @include pie;
-  
+
   }
 
 }
-
